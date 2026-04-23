@@ -1,0 +1,40 @@
+# MHD Continuation Configuration
+physics:
+  Re: 40
+  nu: 0.025          # 1/Re
+  eta: 0.025         # 1/Re (equal dissipation)
+  n: 128             # grid size
+  forcing: "-4*cos(4*y)"
+  b0_start: [0.0, 0.01]   # initial mean magnetic field [bx, by]
+  b0_target: 1.0           # max by to sweep to
+  b0_step: 0.01            # initial increment
+  steps: 1024              # time integration steps per period
+  ministeps: 32            # steps per checkpoint segment
+
+continuation:
+  ds_init: 0.001           # initial arc-length step
+  ds_min: 1.0e-5           # minimum step (give up if below this)
+  ds_max: 0.05             # maximum step
+  ds_grow: 1.2             # multiply ds by this on easy steps
+  ds_shrink: 0.5           # multiply ds by this on failed steps
+  max_newton_iter: 128
+  newton_tol: 1.0e-10
+  max_time_hours: 10.0     # wall-clock timeout per solution
+  convergence_order: 8     # arc-length norm exponent (from notebook: ||sol - sol_prev||^{-ss})
+  use_hookstep: false      # use hookstep trust region instead of line search
+
+gmres:
+  restart: 50
+  max_iter: 500
+  tol: 1.0e-8
+
+analysis:
+  run_floquet: true
+  run_animation: true
+  animation_fps: 10
+  bifurcation_jump_threshold: 0.1   # flag if solution norm jumps by this much
+
+paths:
+  raw_solutions: "Re40_all_for_matt"
+  converted_solutions: "data/converted/Re40"
+  output_dir: "data/sweep_results/Re40/B0_sweep"
