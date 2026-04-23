@@ -131,3 +131,4 @@ temp_data/
 !temp_data/.gitkeep
 figures/
 !figures/.gitkeep
+".claude" 
