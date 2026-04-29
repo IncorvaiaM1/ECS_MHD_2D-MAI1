@@ -74,6 +74,8 @@ def run_floquet(
     if f.ndim == 4:
         f = f[0, ...]  # restrict to single-shooting
 
+    f = jnp.array(f, dtype=jnp.float64)  # JVP requires primal/tangent dtypes to match
+
     steps = int(param_dict['steps'])
     dt    = float(T) / steps
     n     = f.shape[-1]
